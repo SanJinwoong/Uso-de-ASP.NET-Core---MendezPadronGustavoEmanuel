@@ -278,8 +278,8 @@ ApplicationDbContext.cs  → Contexto de Entity Framework
 
 **Autor:** Méndez Padrón Gustavo Emanuel  
 **Universidad:** Universidad Autónoma de Tamaulipas  
-**Email:** [tu-email@uat.edu.mx]  
-**GitHub:** [https://github.com/TU_USUARIO]
+**Email:** [a2233336160@alumnos.uat.edu.mx]  
+**GitHub:** [https://github.com/SanJinwoong]
 
 ---
 
