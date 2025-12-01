@@ -1,0 +1,112 @@
+﻿@model Taller_ASP.NET_Core.Models.TaskItem
+
+@{
+    ViewData["Title"] = "Editar Tarea";
+}
+
+<div class="container mt-4">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow">
+                <div class="card-header" style="background-color: #4CAF50; color: white;">
+                    <h2 class="mb-0">Editar Tarea</h2>
+                </div>
+                <div class="card-body">
+                    <form asp-action="Edit" method="post" enctype="multipart/form-data">
+                        <div asp-validation-summary="ModelOnly" class="alert alert-danger" role="alert"></div>
+
+                        <!-- Campo oculto para el ID -->
+                        <input type="hidden" asp-for="id" />
+
+                        <!-- Campo: Título -->
+                        <div class="mb-3">
+                            <label asp-for="Title" class="form-label fw-bold">
+                                <i class="bi bi-card-heading"></i> Título *
+                            </label>
+                            <input asp-for="Title" class="form-control form-control-lg" autofocus />
+                            <span asp-validation-for="Title" class="text-danger"></span>
+                        </div>
+
+                        <!-- Campo: Descripción -->
+                        <div class="mb-3">
+                            <label asp-for="Description" class="form-label fw-bold">
+                                <i class="bi bi-text-paragraph"></i> Descripción
+                            </label>
+                            <textarea asp-for="Description" class="form-control" rows="4"></textarea>
+                            <span asp-validation-for="Description" class="text-danger"></span>
+                        </div>
+
+                        <!-- Mostrar imagen actual si existe -->
+                        @if (Model.Image != null && Model.Image.Length > 0)
+                        {
+                                <div class="mb-3">
+                                    <label class="form-label fw-bold">
+                                        <i class="bi bi-image-fill"></i> Imagen Actual
+                                    </label>
+                                    <div class="text-center">
+                                        <img src="data:@Model.ImageContentType;base64,@Convert.ToBase64String(Model.Image)" 
+                                             alt="Imagen actual" 
+                                             class="img-thumbnail shadow-sm" 
+                                             style="max-width: 300px;">
+                                    </div>
+                                    <small class="text-muted d-block mt-2">
+                                        <i class="bi bi-info-circle"></i> Sube una nueva imagen para reemplazarla.
+                                    </small>
+                                </div>
+                        }
+
+                        <!-- Campo: Nueva imagen -->
+                        <div class="mb-3">
+                            <label asp-for="ImageFile" class="form-label fw-bold">
+                                <i class="bi bi-image"></i> Nueva Imagen (opcional)
+                            </label>
+                            <input asp-for="ImageFile" 
+                                   class="form-control" 
+                                   type="file" 
+                                   accept="image/*"
+                                   onchange="previewImage(this);" />
+                            <span asp-validation-for="ImageFile" class="text-danger"></span>
+
+                            <!-- Preview de la nueva imagen -->
+                            <div id="imagePreview" class="mt-2" style="display:none;">
+                                <p class="text-muted">Vista previa de la nueva imagen:</p>
+                                <img id="preview" src="" alt="Vista previa" class="img-thumbnail" style="max-width: 300px;">
+                            </div>
+                        </div>
+
+                        <hr />
+
+                        <!-- Botones -->
+                        <div class="d-flex justify-content-between">
+                            <a asp-action="Index" class="btn btn-secondary btn-lg">
+                                <i class="bi bi-x-circle"></i> Cancelar
+                            </a>
+                            <button type="submit" class="btn btn-warning btn-lg">
+                                <i class="bi bi-save"></i> Guardar Cambios
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+
+        <script>
+            function previewImage(input) {
+                if (input.files && input.files[0]) {
+                    var reader = new FileReader();
+                    reader.onload = function (e) {
+                        document.getElementById('preview').src = e.target.result;
+                        document.getElementById('imagePreview').style.display = 'block';
+                    }
+                    reader.readAsDataURL(input.files[0]);
+                }
+            }
+        </script>
+}

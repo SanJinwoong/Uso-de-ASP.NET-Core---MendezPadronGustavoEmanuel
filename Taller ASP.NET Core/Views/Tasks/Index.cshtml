@@ -1,0 +1,125 @@
+﻿@*
+    Vista Index de Tareas
+    Autor: Méndez Padrón Gustavo Emanuel
+    Universidad Autónoma de Tamaulipas
+    
+    Vista principal que muestra la lista de tareas del usuario con:
+    - Búsqueda en tiempo real
+    - Filtros por estado (todas, pendientes, completadas)
+    - Panel de detalles dinámico
+    - Ordenamiento drag & drop
+*@
+
+@using Taller_ASP.NET_Core.Models
+@model List<TaskItem>
+@{
+    ViewData["Title"] = "Mis Tareas";
+}
+
+<div class="container-fluid mt-4">
+    <!-- Encabezado -->
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h2>Mis Tareas</h2>
+        <a asp-action="Create" class="btn btn-success">
+            <i class="bi bi-plus-lg"></i> Nueva Tarea
+        </a>
+    </div>
+
+    <!-- Barra de búsqueda y filtros -->
+    <form method="get" asp-action="Index" id="filterForm" class="row g-3 mb-3">
+        <div class="col-md-7">
+            <div class="input-group">
+                <span class="input-group-text">
+                    <i class="bi bi-search"></i>
+                </span>
+                <input type="text" 
+                       name="searchTerm" 
+                       class="form-control" 
+                       placeholder="Buscar tareas por título o descripción..."
+                       value="@ViewBag.SearchTerm"
+                       oninput="this.form.submit()">
+            </div>
+        </div>
+        <div class="col-md-3">
+            <select name="filter" class="form-select" onchange="this.form.submit()">
+                <option value="all" selected="@(ViewBag.Filter == "all" ? "selected" : null)">Todas las tareas</option>
+                <option value="pending" selected="@(ViewBag.Filter == "pending" ? "selected" : null)">Pendientes</option>
+                <option value="completed" selected="@(ViewBag.Filter == "completed" ? "selected" : null)">Completadas</option>
+            </select>
+        </div>
+        <div class="col-md-2">
+            @if (!string.IsNullOrEmpty(ViewBag.SearchTerm) || ViewBag.Filter != "all")
+            {
+                    <a asp-action="Index" class="btn btn-outline-secondary w-100">
+                        <i class="bi bi-x-circle"></i> Limpiar
+                    </a>
+            }
+        </div>
+    </form>
+
+    <!-- Contador de tareas -->
+    <div class="mb-3">
+        <small class="text-muted">
+            Mostrando @Model.Count tarea@(Model.Count != 1 ? "s" : "")
+        </small>
+    </div>
+
+    <div class="row">
+        <!-- Panel izquierdo: Lista de tareas -->
+        <div class="col-md-4">
+            <div id="task-list" class="task-list">
+                @if (Model.Count == 0)
+                {
+                        <div class="alert alert-info text-center">
+                            <i class="bi bi-info-circle" style="font-size: 2rem;"></i>
+                            <p class="mt-2 mb-0">
+                            @if (!string.IsNullOrEmpty(ViewBag.SearchTerm))
+                            {
+                                <text>No se encontraron tareas con el término "@ViewBag.SearchTerm"</text>
+                            }
+                            else if (ViewBag.Filter == "pending")
+                            {
+                                <text>No tienes tareas pendientes</text>
+                            }
+                            else if (ViewBag.Filter == "completed")
+                            {
+                                <text>No tienes tareas completadas</text>
+                            }
+                            else
+                            {
+                                <text>No tienes tareas creadas. ¡Crea tu primera tarea!</text>
+                            }
+                            </p>
+                        </div>
+                }
+                else
+                {
+                    @foreach (var task in Model)
+                    {
+                        @await Html.PartialAsync("_TaskCard", task)
+                    }
+                }
+            </div>
+        </div>
+
+        <!-- Panel derecho: Detalle de la tarea -->
+        <div class="col-md-8">
+            <div class="card shadow-sm">
+                <div class="card-header text-white" style="background-color: #66BB6A;">
+                    <h5 class="mb-0">Detalles de la Tarea</h5>
+                </div>
+                <div class="card-body">
+                    <div id="task-detail-container" class="text-center text-muted">
+                        <i class="bi bi-arrow-left-circle" style="font-size: 3rem;"></i>
+                        <p class="mt-3">Selecciona una tarea de la lista para ver los detalles</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+        <script src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js"></script>
+        <script src="~/js/tasks.js"></script>
+}

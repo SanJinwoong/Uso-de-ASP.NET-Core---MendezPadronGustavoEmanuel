@@ -1,0 +1,45 @@
+﻿@model Taller_ASP.NET_Core.Models.TaskItem
+
+<div class="task-card @(Model.IsCompleted ? "completed" : "")" data-task-id="@Model.id">
+
+    <!-- Checkbox -->
+    <div class="task-checkbox" onclick="event.stopPropagation();">
+        <form asp-action="ToggleComplete" asp-route-id="@Model.id" method="post" style="display:inline;">
+            @Html.AntiForgeryToken()
+            <input type="checkbox" 
+            @(Model.IsCompleted ? "checked" : "")
+                   onchange="this.form.submit();">
+        </form>
+    </div>
+
+    <!-- Contenido -->
+    <div class="task-content" onclick="loadTaskDetail(@Model.id)">
+        <h5 class="task-title mb-1">@Model.Title</h5>
+
+        @if (!string.IsNullOrEmpty(Model.Description))
+        {
+                <p class="task-description text-muted mb-1">
+                @(Model.Description.Length > 60
+                        ? Model.Description.Substring(0, 60) + "..."
+                        : Model.Description)
+                </p>
+        }
+
+        <small class="text-muted">
+            <i class="bi bi-calendar3"></i> @Model.CreatedAt.ToString("dd/MM/yyyy HH:mm")
+        </small>
+    </div>
+
+    <!-- Indicador de imagen -->
+    @if (Model.Image != null && Model.Image.Length > 0)
+    {
+            <div class="task-image-indicator" onclick="loadTaskDetail(@Model.id)">
+                <i class="bi bi-image-fill text-primary"></i>
+            </div>
+    }
+
+    <!-- Handle para arrastrar -->
+    <div class="task-drag-handle">
+        <i class="bi bi-grip-vertical"></i>
+    </div>
+</div>

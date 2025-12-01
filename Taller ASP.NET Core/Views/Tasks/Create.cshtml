@@ -1,0 +1,107 @@
+﻿@*
+    Vista Create de Tareas
+    Autor: Méndez Padrón Gustavo Emanuel - UAT
+    
+    Formulario para crear nuevas tareas con:
+    - Validaciones en cliente y servidor
+    - Soporte para adjuntar imágenes
+    - Diseño responsivo con Bootstrap
+*@
+
+@model Taller_ASP.NET_Core.Models.TaskItem
+
+@{
+    ViewData["Title"] = "Nueva Tarea";
+}
+
+<div class="container mt-4">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow">
+                <div class="card-header bg-success text-white">
+                    <h2 class="mb-0">Crear Nueva Tarea</h2>
+                </div>
+                <div class="card-body">
+                    <form asp-action="Create" method="post" enctype="multipart/form-data">
+                        <div asp-validation-summary="ModelOnly" class="alert alert-danger" role="alert"></div>
+
+                        <!-- Campo: Título -->
+                        <div class="mb-3">
+                            <label asp-for="Title" class="form-label fw-bold">
+                                <i class="bi bi-card-heading"></i> Título *
+                            </label>
+                            <input asp-for="Title" 
+                                   class="form-control form-control-lg" 
+                                   placeholder="Ej: Comprar víveres"
+                                   autofocus />
+                            <span asp-validation-for="Title" class="text-danger"></span>
+                        </div>
+
+                        <!-- Campo: Descripción -->
+                        <div class="mb-3">
+                            <label asp-for="Description" class="form-label fw-bold">
+                                <i class="bi bi-text-paragraph"></i> Descripción
+                            </label>
+                            <textarea asp-for="Description" 
+                                      class="form-control" 
+                                      rows="4"
+                                      placeholder="Agrega detalles sobre esta tarea..."></textarea>
+                            <span asp-validation-for="Description" class="text-danger"></span>
+                            <small class="form-text text-muted">Máximo 1000 caracteres</small>
+                        </div>
+
+                        <!-- Campo: Imagen -->
+                        <div class="mb-3">
+                            <label asp-for="ImageFile" class="form-label fw-bold">
+                                <i class="bi bi-image"></i> Imagen (opcional)
+                            </label>
+                            <input asp-for="ImageFile" 
+                                   class="form-control" 
+                                   type="file" 
+                                   accept="image/*"
+                                   onchange="previewImage(this);" />
+                            <span asp-validation-for="ImageFile" class="text-danger"></span>
+                            <small class="form-text text-muted">Formatos: JPG, PNG, GIF, WebP</small>
+
+                            <!-- Preview de la imagen -->
+                            <div id="imagePreview" class="mt-2" style="display:none;">
+                                <img id="preview" src="" alt="Vista previa" class="img-thumbnail" style="max-width: 300px;">
+                            </div>
+                        </div>
+
+                        <hr />
+
+                        <!-- Botones -->
+                        <div class="d-flex justify-content-between">
+                            <a asp-action="Index" class="btn btn-secondary btn-lg">
+                                <i class="bi bi-x-circle"></i> Cancelar
+                            </a>
+                            <button type="submit" class="btn btn-primary btn-lg">
+                                <i class="bi bi-save"></i> Guardar Tarea
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+
+        <script>
+            function previewImage(input) {
+                if (input.files && input.files[0]) {
+                    var reader = new FileReader();
+                    reader.onload = function (e) {
+                        document.getElementById('preview').src = e.target.result;
+                        document.getElementById('imagePreview').style.display = 'block';
+                    }
+                    reader.readAsDataURL(input.files[0]);
+                }
+            }
+        </script>
+}

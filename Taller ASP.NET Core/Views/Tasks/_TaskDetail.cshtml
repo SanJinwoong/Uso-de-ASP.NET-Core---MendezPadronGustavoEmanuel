@@ -1,0 +1,94 @@
+﻿@model Taller_ASP.NET_Core.Models.TaskItem
+
+<div class="task-detail-card">
+    <div class="d-flex justify-content-between align-items-start mb-3">
+        <div>
+            <h3 class="mb-1">@Model.Title</h3>
+            <small class="text-muted">
+                <i class="bi bi-calendar3"></i> Creada: @Model.CreatedAt.ToString("dd/MM/yyyy HH:mm")
+            </small>
+        </div>
+
+        <div class="btn-group" role="group">
+            @if (!Model.IsCompleted)
+            {
+                    <a asp-action="Edit" asp-route-id="@Model.id" 
+                       class="btn btn-sm btn-outline-primary" 
+                       title="Editar tarea">
+                        <i class="bi bi-pencil-square"></i> Editar
+                    </a>
+            }
+            else
+            {
+                    <button type="button" 
+                            class="btn btn-sm btn-outline-secondary" 
+                            title="No se puede editar una tarea completada"
+                            disabled>
+                        <i class="bi bi-lock"></i> Bloqueada
+                    </button>
+            }
+
+            <form asp-action="DeleteConfirmed" asp-route-id="@Model.id" 
+                  method="post" 
+                  style="display:inline;"
+                  onsubmit="return confirm('¿Estás seguro de que deseas eliminar esta tarea?');">
+                @Html.AntiForgeryToken()
+                <button type="submit" class="btn btn-sm btn-outline-danger" title="Eliminar tarea">
+                    <i class="bi bi-trash3"></i> Eliminar
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <hr />
+
+    <div class="mb-3">
+        <h6 class="text-muted">Estado:</h6>
+        <span class="badge @(Model.IsCompleted ? "bg-success" : "bg-warning text-dark") fs-6">
+            @if (Model.IsCompleted)
+            {
+                    <i class="bi bi-check-circle-fill"></i> @:Completada
+            }
+            else
+            {
+                    <i class="bi bi-hourglass-split"></i> @:Pendiente
+            }
+        </span>
+
+        @if (Model.IsCompleted)
+        {
+                <div class="alert alert-info mt-2" role="alert">
+                    <i class="bi bi-info-circle"></i> Las tareas completadas no pueden ser editadas. 
+                    Desmarca como completada para poder editarla.
+                </div>
+        }
+    </div>
+
+    @if (!string.IsNullOrEmpty(Model.Description))
+    {
+            <div class="mb-3">
+                <h6 class="text-muted">Descripción:</h6>
+                <p>@Model.Description</p>
+            </div>
+    }
+
+    @if (Model.Image != null && Model.Image.Length > 0)
+    {
+            <div class="mb-3">
+                <h6 class="text-muted">Imagen adjunta:</h6>
+                <div class="text-center">
+                    <img src="data:@Model.ImageContentType;base64,@Convert.ToBase64String(Model.Image)" 
+                         alt="@Model.Title" 
+                         class="img-fluid rounded shadow-sm"
+                         style="max-height: 400px; object-fit: contain;">
+                </div>
+            </div>
+    }
+
+    <div class="mt-4 pt-3 border-top">
+        <small class="text-muted">
+            <i class="bi bi-info-circle"></i> 
+            ID: @Model.id | Orden: @Model.Order
+        </small>
+    </div>
+</div>
