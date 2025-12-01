@@ -7,7 +7,7 @@
 
 ---
 
-## 📋 Descripción del Proyecto
+## Descripción del Proyecto
 
 Sistema web de gestión de tareas desarrollado con **ASP.NET Core 8.0** (actualizado a .NET 9.0) que implementa el patrón arquitectónico **Modelo-Vista-Controlador (MVC)**. 
 
@@ -15,22 +15,22 @@ La aplicación permite a los usuarios autenticados crear, editar, eliminar y org
 
 ---
 
-## ✨ Características Principales
+## Características Principales
 
-### 🔐 Autenticación y Seguridad
+### Autenticación y Seguridad
 - Sistema de autenticación con **ASP.NET Core Identity**
 - Registro e inicio de sesión de usuarios
 - Cada usuario tiene acceso únicamente a sus propias tareas
 - Validación de sesiones y protección de rutas
 
-### 📝 Gestión de Tareas (CRUD Completo)
+### Gestión de Tareas (CRUD Completo)
 - **Crear** tareas con título, descripción e imagen opcional
 - **Leer/Visualizar** lista completa de tareas del usuario
 - **Editar** tareas existentes
 - **Eliminar** tareas
 - **Marcar** tareas como completadas o pendientes
 
-### 🔍 Funcionalidades Avanzadas
+### Funcionalidades Avanzadas
 - **Búsqueda:** Filtrar tareas por título o descripción en tiempo real
 - **Filtros:** Visualizar todas las tareas, solo pendientes o solo completadas
 - **Ordenamiento:** Reorganizar tareas mediante drag & drop (SortableJS)
@@ -39,7 +39,7 @@ La aplicación permite a los usuarios autenticados crear, editar, eliminar y org
 
 ---
 
-## 🛠️ Tecnologías Utilizadas
+## Tecnologías Utilizadas
 
 | Tecnología | Versión | Descripción |
 |-----------|---------|-------------|
@@ -54,7 +54,7 @@ La aplicación permite a los usuarios autenticados crear, editar, eliminar y org
 
 ---
 
-## 🏗️ Arquitectura del Proyecto
+## Arquitectura del Proyecto
 
 ### Patrón MVC (Modelo-Vista-Controlador)
 
@@ -91,7 +91,7 @@ Taller ASP.NET Core/
 
 ---
 
-## 🚀 Instalación y Ejecución
+## Instalación y Ejecución
 
 ### Requisitos Previos
 - Visual Studio 2022 o superior
@@ -128,7 +128,7 @@ Abrir el navegador en: `http://localhost:5152`
 
 ---
 
-## 👤 Uso de la Aplicación
+## Uso de la Aplicación
 
 ### Primera Vez
 1. Hacer clic en **"Registrarse"**
@@ -147,7 +147,7 @@ Abrir el navegador en: `http://localhost:5152`
 
 ---
 
-## 📸 Capturas de Pantalla
+## Capturas de Pantalla
 
 ### Página de Inicio
 Pantalla de bienvenida con opciones de registro e inicio de sesión.
@@ -160,7 +160,7 @@ Formularios con validaciones para gestionar tareas.
 
 ---
 
-## 🎯 Funcionalidades Destacadas
+## Funcionalidades Destacadas
 
 ### 1. Búsqueda Inteligente
 ```csharp
@@ -195,18 +195,18 @@ var query = _context.TaskItems.Where(t => t.UserId == userId);
 
 ---
 
-## 🔒 Seguridad Implementada
+## Seguridad Implementada
 
-- ✅ Autenticación obligatoria para acceder a tareas
-- ✅ Validación de propiedad antes de editar/eliminar
-- ✅ Protección CSRF con tokens antifalsificación
-- ✅ Validaciones de modelo en cliente y servidor
-- ✅ Sanitización de entradas de usuario
-- ✅ Logging de intentos de acceso no autorizado
+- Autenticación obligatoria para acceder a tareas
+- Validación de propiedad antes de editar/eliminar
+- Protección CSRF con tokens antifalsificación
+- Validaciones de modelo en cliente y servidor
+- Sanitización de entradas de usuario
+- Logging de intentos de acceso no autorizado
 
 ---
 
-## 📚 Aprendizajes y Conceptos Aplicados
+## Aprendizajes y Conceptos Aplicados
 
 Durante el desarrollo de este proyecto se aplicaron los siguientes conceptos:
 
@@ -233,7 +233,7 @@ Durante el desarrollo de este proyecto se aplicaron los siguientes conceptos:
 
 ---
 
-## 🐛 Solución de Problemas
+## Solución de Problemas
 
 ### Error: "No se puede conectar a la base de datos"
 **Solución:** Ejecutar `Update-Database` en la consola de paquetes.
@@ -249,7 +249,7 @@ Durante el desarrollo de este proyecto se aplicaron los siguientes conceptos:
 
 ---
 
-## 📄 Estructura de Archivos Importantes
+## Estructura de Archivos Importantes
 
 ```
 TasksController.cs       → Lógica principal de tareas (Index, Create, Edit, Delete)
@@ -262,19 +262,19 @@ ApplicationDbContext.cs  → Contexto de Entity Framework
 
 ---
 
-## 🚀 Posibles Mejoras Futuras
+## Posibles Mejoras Futuras
 
-- [ ] Agregar fechas de vencimiento a las tareas
-- [ ] Implementar categorías o etiquetas
-- [ ] Notificaciones push para tareas próximas a vencer
-- [ ] Exportar tareas a PDF o Excel
-- [ ] Modo oscuro para la interfaz
-- [ ] Aplicación móvil nativa (Xamarin/MAUI)
-- [ ] API RESTful para integración con terceros
+- Agregar fechas de vencimiento a las tareas
+- Implementar categorías o etiquetas
+- Notificaciones push para tareas próximas a vencer
+- Exportar tareas a PDF o Excel
+- Modo oscuro para la interfaz
+- Aplicación móvil nativa (Xamarin/MAUI)
+- API RESTful para integración con terceros
 
 ---
 
-## 📞 Contacto
+## Contacto
 
 **Autor:** Méndez Padrón Gustavo Emanuel  
 **Universidad:** Universidad Autónoma de Tamaulipas  
@@ -283,13 +283,13 @@ ApplicationDbContext.cs  → Contexto de Entity Framework
 
 ---
 
-## 📜 Licencia
+## Licencia
 
 Este proyecto fue desarrollado con fines educativos como parte del curso de Desarrollo de Aplicaciones Web en la Universidad Autónoma de Tamaulipas.
 
 ---
 
-## 🙏 Agradecimientos
+## Agradecimientos
 
 - Universidad Autónoma de Tamaulipas
 - Profesor del curso de Desarrollo Web
@@ -298,4 +298,4 @@ Este proyecto fue desarrollado con fines educativos como parte del curso de Desa
 
 ---
 
-**Desarrollado con ❤️ por Gustavo Méndez | UAT 2025**
+**Desarrollado por Gustavo Méndez | UAT 2025**
